@@ -14,10 +14,14 @@ rd_export.addEventListener("click",() => {
 });
 
 function parsingTest(){
+    const breadcrumbNav = document.querySelector("div.breadcrumb-nav");
     const testForm = document.querySelector("form.questionflagsaveform");
 	let htmlcode = '<link rel="stylesheet" type="text/css" href="https://edu.rosdistant.ru/theme/styles.php/lambda/1698921777_1634732626/all" />'+"\n";
-	htmlcode += testForm.outerHTML;
-	html_save(htmlcode);
+	if(testForm && breadcrumbNav){
+		htmlcode += breadcrumbNav.outerHTML + "\n";
+		htmlcode += testForm.outerHTML;
+		html_save(htmlcode);
+	}
 	
 	function html_save(content = null, name = null, mime = null){
 		if(content === undefined || content === null || content == "") return;
