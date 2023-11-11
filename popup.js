@@ -16,7 +16,8 @@ rd_export.addEventListener("click",() => {
 function parsingTest(){
     const breadcrumbNav = document.querySelector("div.breadcrumb-nav");
     const testForm = document.querySelector("form.questionflagsaveform");
-	let htmlcode = '<link rel="stylesheet" type="text/css" href="https://edu.rosdistant.ru/theme/styles.php/lambda/1698921777_1634732626/all" />'+"\n";
+	let htmlcode = '<meta charset="utf-8" />'+"\n";
+	htmlcode += '<link rel="stylesheet" type="text/css" href="https://edu.rosdistant.ru/theme/styles.php/lambda/1698921777_1634732626/all" />'+"\n";
 	if(testForm && breadcrumbNav){
 		htmlcode += breadcrumbNav.outerHTML + "\n";
 		htmlcode += testForm.outerHTML;
