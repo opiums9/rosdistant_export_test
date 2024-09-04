@@ -34,6 +34,7 @@ function parsingTest(){
     const testForm = document.querySelector("form.questionflagsaveform");
 	let htmlcode = '<meta charset="utf-8" />'+"\n";
 	htmlcode += '<link rel="stylesheet" type="text/css" href="https://edu.rosdistant.ru/theme/styles.php/lambda/1698921777_1634732626/all" />'+"\n";
+	htmlcode += '<style>..formulation input[type="text"],.formulation select{min-width:300px;}</style>'+"\n";
 	if(testForm && breadcrumbNav){
 		htmlcode += breadcrumbNav.outerHTML + "\n";
 		htmlcode += testForm.outerHTML;
@@ -66,6 +67,7 @@ function parsingPdfTest(){
     const testForm = document.querySelector("form.questionflagsaveform");
 	let htmlcode = '<meta charset="utf-8" />'+"\n";
 	htmlcode += '<link rel="stylesheet" type="text/css" href="https://edu.rosdistant.ru/theme/styles.php/lambda/1698921777_1634732626/all" />'+"\n";
+	htmlcode += '<style>.formulation input[type="text"],.formulation select{min-width:300px;}</style>'+"\n";
 	if(testForm && breadcrumbNav){
 		htmlcode += breadcrumbNav.outerHTML + "\n";
 		htmlcode += testForm.outerHTML;
