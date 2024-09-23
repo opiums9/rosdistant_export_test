@@ -1,5 +1,6 @@
 const rd_export = document.getElementById("rd_export");
 const rd_pdf_export = document.getElementById("rd_pdf_export");
+const rd_pdf_book = document.getElementById("rd_pdf_book");
 
 rd_export.addEventListener("click",() => {
 	chrome.tabs.query({active: true}, function(tabs){
@@ -29,12 +30,26 @@ rd_pdf_export.addEventListener("click",() => {
 	});
 });
 
+rd_pdf_book.addEventListener("click",() => {
+	chrome.tabs.query({active: true}, function(tabs){
+		var tab = tabs[0];
+		if(tab){
+			chrome.scripting.executeScript({
+				target: {tabId: tab.id, allFrames: true},
+				func: parsingPdfBook
+			});
+		}else{
+			alert("There are no active tabs");
+		}
+	});
+});
+
 function parsingTest(){
     const breadcrumbNav = document.querySelector("div.breadcrumb-nav");
     const testForm = document.querySelector("form.questionflagsaveform");
 	let htmlcode = '<meta charset="utf-8" />'+"\n";
 	htmlcode += '<link rel="stylesheet" type="text/css" href="https://edu.rosdistant.ru/theme/styles.php/lambda/1698921777_1634732626/all" />'+"\n";
-	htmlcode += '<style>..formulation input[type="text"],.formulation select{min-width:300px;}</style>'+"\n";
+	htmlcode += '<style>.formulation input[type="text"],.formulation select{min-width:300px;}</style>'+"\n";
 	if(testForm && breadcrumbNav){
 		htmlcode += breadcrumbNav.outerHTML + "\n";
 		htmlcode += testForm.outerHTML;
@@ -90,5 +105,25 @@ function parsingPdfTest(){
 				document.body.removeChild(iframe);
 			}, 100);
 		};
+	}
+}
+
+function parsingPdfBook(){
+	const docHTML = document.documentElement.outerHTML;
+	if(document.querySelector('script[src="data/js/viewer.js"]') == null) return;
+	if(docHTML.match(/var fileOpenParams = (.*);/) != null){
+		let book = JSON.parse(docHTML.match(/var fileOpenParams = (.*);/)[1]);
+		let passw = "";
+		for(let k in localStorage){
+			if(k.match(/ispring::book(.*)/) != null){
+				passw = k.match(/ispring::book\/(.*)/)[1];
+			}
+		}
+		if(passw != ""){
+			let quest = confirm(passw);
+			if(quest){
+				const new_win = window.open(book.filePath, '_blank');
+			}
+		}
 	}
 }
