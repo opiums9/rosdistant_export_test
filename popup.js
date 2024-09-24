@@ -113,14 +113,18 @@ function parsingPdfBook(){
 	if(document.querySelector('script[src="data/js/viewer.js"]') == null) return;
 	if(docHTML.match(/var fileOpenParams = (.*);/) != null){
 		let book = JSON.parse(docHTML.match(/var fileOpenParams = (.*);/)[1]);
-		let passw = "";
+		let passw = {};
 		for(let k in localStorage){
 			if(k.match(/ispring::book(.*)/) != null){
-				passw = k.match(/ispring::book\/(.*)/)[1];
+				let u = (typeof JSON.parse(JSON.parse(localStorage.getItem(k))) === "object") ? JSON.parse(JSON.parse(localStorage.getItem(k))).updated : 0;
+				if(!passw.updated || passw.updated && u > passw.updated){
+					passw.key = k.match(/ispring::book\/(.*)/)[1];
+					passw.updated = JSON.parse(JSON.parse(localStorage.getItem(k))).updated;
+				}
 			}
 		}
-		if(passw != ""){
-			let quest = confirm(passw);
+		if(passw.key != ""){
+			let quest = confirm(passw.key);
 			if(quest){
 				const new_win = window.open(book.filePath, '_blank');
 			}
