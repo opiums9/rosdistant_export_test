@@ -13,5 +13,6 @@
 		"default_popup":"popup.html"
 	},
 	"permissions": ["scripting", "activeTab"],
+	"host_permissions": ["https://edu.rosdistant.ru/*"],
 	"background":{}
 }
